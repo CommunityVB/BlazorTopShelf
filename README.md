@@ -4,7 +4,7 @@ This sample demonstrates running a .NET 8 Blazor WebApp using VB.NET as much as 
 
 It started as the default C# project as scaffolded from the Blazor WebApp template. Identity Pages and Sample Pages were included in the scaffolding. The SignalR demo, added later, was built using [this guidance](https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor).
 
-You may call VB.NET code from a C# Razor page by adding classes to the `Presentation.Operations` project as needed, and then referencing them from the page's `@code {}` section.
+You may call VB.NET code from a C# Razor page by adding classes to the `Presentation.Operations` project as needed, and then referencing them from the page's `@code {}` section. An example of this approach may be found in `\Components\Pages\Weather.razor`.
 
 To install the service, `dotnet publish` to your desired output directory, and then run the following command from an elevated command prompt in that directory:
 
