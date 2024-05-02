@@ -1,7 +1,6 @@
 ﻿Imports System
 Imports System.Security.Claims
 Imports System.Threading.Tasks
-Imports Intexx
 Imports Microsoft.AspNetCore.Components.Authorization
 Imports Microsoft.AspNetCore.Components.Server
 Imports Microsoft.AspNetCore.Identity
@@ -55,7 +54,7 @@ Namespace Account
 
       oUser = Await UserManager.GetUserAsync(Principal)
 
-      If oUser.IsNothing Then
+      If oUser Is Nothing Then
         lReturn = False
 
       ElseIf Not UserManager.SupportsUserSecurityStamp Then

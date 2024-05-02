@@ -1,6 +1,5 @@
 ﻿Imports System
 Imports System.Collections.Generic
-Imports Intexx
 Imports MoreLinq
 Imports Topshelf
 Imports Topshelf.HostConfigurators
@@ -86,11 +85,11 @@ Public Class Host
     DependsOnServices As List(Of String)
   )
 
-    ServiceName.ThrowIfNothing(NameOf(ServiceName))
-    DisplayName.ThrowIfNothing(NameOf(DisplayName))
-    Description.ThrowIfNothing(NameOf(Description))
-    OnException.ThrowIfNothing(NameOf(OnException))
-    DependsOnServices.ThrowIfNothing(NameOf(DependsOnServices))
+    ArgumentNullException.ThrowIfNull(ServiceName, NameOf(ServiceName))
+    ArgumentNullException.ThrowIfNull(DisplayName, NameOf(DisplayName))
+    ArgumentNullException.ThrowIfNull(Description, NameOf(Description))
+    ArgumentNullException.ThrowIfNull(OnException, NameOf(OnException))
+    ArgumentNullException.ThrowIfNull(DependsOnServices, NameOf(DependsOnServices))
 
     Me.DependsOnServices = DependsOnServices
     Me.ServiceName = ServiceName
@@ -138,7 +137,7 @@ Public Class Host
     Dim oFactory As ServiceFactory(Of Manager)
 
 
-    ServiceEvents.ThrowIfNothing(NameOf(ServiceEvents))
+    ArgumentNullException.ThrowIfNull(ServiceEvents, NameOf(ServiceEvents))
 
     oServiceEvents = If(ServiceEvents, New ServiceEvents)
     oHostEvents = If(HostEvents, New HostEvents)

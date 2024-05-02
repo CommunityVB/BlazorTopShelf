@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="itxcorlib" Version="2023.12.7.6" />
     <PackageReference Include="morelinq" Version="4.2.0" />
     <PackageReference Include="Topshelf" Version="4.3.0" />
   </ItemGroup>

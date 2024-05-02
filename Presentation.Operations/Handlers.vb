@@ -5,7 +5,6 @@ Imports System.Reflection
 Imports System.Security.Claims
 Imports System.Text.Json
 Imports System.Threading.Tasks
-Imports Intexx
 Imports Microsoft.AspNetCore.Authentication
 Imports Microsoft.AspNetCore.Http
 Imports Microsoft.AspNetCore.Http.Extensions
@@ -103,7 +102,7 @@ Friend Class Handlers
 
     oUser = Await UserManager.GetUserAsync(Context.User)
 
-    If oUser.IsNothing Then
+    If oUser Is Nothing Then
       oResult = Results.NotFound($"Unable to load user with ID '{UserManager.GetUserId(Context.User)}'.")
     Else
       sUserId = Await UserManager.GetUserIdAsync(oUser)
