@@ -1,0 +1,113 @@
+﻿@page "/Chat"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
+
+<PageTitle>Home</PageTitle>
+
+<style>
+  .container {
+    margin-left: 0;
+    margin-right: auto;
+    max-width: none;
+  }
+</style>
+
+<div class="container">
+
+  <div class="row mt-3">
+    <div class="col-7">
+      <p>
+        This page demonstrates the use of a SignalR hub. To use it, duplicate this tab
+        in your browser and drag it off into a separate new window. Enter some values
+        into the fields. The values you enter should appear on both tabs.
+      </p>
+      <p>
+        The sample was built using guidance from the official Microsoft documentation,
+        found <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor" target="_blank">here</a>.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-1">
+      <label for="userInput">User</label>
+    </div>
+    <div class="col-2">
+      <input id="userInput" class="form-control" @bind="userInput" />
+    </div>
+  </div>
+
+  <div class="row mt-1">
+    <div class="col-1">
+      <label for="messageInput">Message</label>
+    </div>
+    <div class="col-2">
+      <input id="messageInput" class="form-control" @bind="messageInput" size="50" />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-1">
+      <button class="btn btn-primary" @onclick="Send" disabled="@(!IsConnected)">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<hr>
+
+<ul id="messagesList">
+  @foreach (var message in messages)
+  {
+    <li>@message</li>
+  }
+</ul>
+
+@code {
+  private HubConnection? hubConnection;
+  private List<string> messages = new List<string>();
+  private string? userInput;
+  private string? messageInput;
+
+  protected override async Task OnInitializedAsync()
+  {
+    hubConnection = new HubConnectionBuilder()
+        .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+        .ConfigureLogging(logging =>
+        {
+          logging.SetMinimumLevel(LogLevel.Trace);
+          logging.AddConsole();
+        })
+        .Build();
+
+    hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+    {
+      var encodedMsg = $"{user}: {message}";
+      messages.Add(encodedMsg);
+      InvokeAsync(StateHasChanged);
+    });
+
+    await hubConnection.StartAsync();
+  }
+
+  private async Task Send()
+  {
+    if (hubConnection is not null)
+    {
+      await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+    }
+  }
+
+  public bool IsConnected =>
+      hubConnection?.State == HubConnectionState.Connected;
+
+  public async ValueTask DisposeAsync()
+  {
+    if (hubConnection is not null)
+    {
+      await hubConnection.DisposeAsync();
+    }
+  }
+}
