@@ -6,15 +6,15 @@ Imports Microsoft.AspNetCore.Builder
 Imports Microsoft.AspNetCore.Components.Authorization
 Imports Microsoft.AspNetCore.Identity
 Imports Microsoft.AspNetCore.ResponseCompression
-Imports Microsoft.AspNetCore.SignalR
 Imports Microsoft.Extensions.DependencyInjection
 Imports Microsoft.Extensions.Hosting
 Imports Persistence
 Imports Persistence.Models
 Imports Presentation.Operations.Account
+Imports Presentation.Operations.SignalR
 
 Public Class ServiceInitializer
-  Public Shared Function OnStart(Of TApp, THub As Hub)(Website As WebApplication) As Action
+  Public Shared Function OnStart(Of TApp)(Website As WebApplication) As Action
     Return Sub()
              ' Configure the HTTP request pipeline.
              If Website.Environment.IsDevelopment Then
@@ -32,7 +32,7 @@ Public Class ServiceInitializer
              Website.UseStaticFiles
              Website.UseAntiforgery
              Website.MapRazorComponents(Of TApp).AddInteractiveServerRenderMode
-             Website.MapHub(Of THub)("/chathub")
+             Website.MapHub(Of ChatHub)("/chathub")
 
              ' Add additional endpoints required by the Identity /Account Razor components.
              Website.MapAdditionalIdentityEndpoints

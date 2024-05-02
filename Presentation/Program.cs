@@ -1,7 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Presentation.Components;
-using Presentation.Hubs;
 using Presentation.Operations;
 using Presentation.Service;
 using static Presentation.Service.Enums;
@@ -27,7 +26,7 @@ namespace Presentation
       context = RunContexts.NetworkService;
 
       website = CreateHostBuilder(args).Build();
-      onStart = ServiceInitializer.OnStart<App, ChatHub>(website);
+      onStart = ServiceInitializer.OnStart<App>(website);
       onStop = ServiceInitializer.OnStop(website);
 
       serviceEvents = new ServiceEvents {
