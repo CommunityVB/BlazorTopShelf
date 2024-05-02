@@ -16,9 +16,9 @@ Namespace Weather
       dStartDate = DateOnly.FromDateTime(Date.Now)
       aSummaries = {"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"}
       oSelector = Function(Index) New WeatherForecast With {
-        .Date = dStartDate.AddDays(Index),
         .TemperatureC = Random.Shared.Next(-20, 55),
-        .Summary = aSummaries(Random.Shared.Next(aSummaries.Length))
+        .Summary = aSummaries(Random.Shared.Next(aSummaries.Length)),
+        .Date = dStartDate.AddDays(Index)
       }
 
       Return Enumerable.Range(1, 5).Select(oSelector).ToArray
@@ -37,7 +37,7 @@ Namespace Weather
 
 
     Public Property TemperatureC As Integer
-    Public Property [Date] As DateOnly
     Public Property Summary As String
+    Public Property [Date] As DateOnly
   End Class
 End Namespace

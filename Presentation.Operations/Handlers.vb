@@ -68,7 +68,6 @@ Friend Class Handlers
     Await Context.SignOutAsync(IdentityConstants.ExternalScheme)
 
     oQueryString = QueryString.Create("Action", ExternalLogins.LinkLoginCallbackAction)
-
     sRedirectUrl = UriHelper.BuildRelative(
                     Context.Request.PathBase,
                     "/Account/Manage/ExternalLogins",

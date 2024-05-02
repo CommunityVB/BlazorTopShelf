@@ -26,5 +26,5 @@ Here's a high-level view of how it works:
 
 ## Notes
 
-- A SQLite database will be created and schemas migrated on first run, in the directory `%LocalAppData%\BlazorTopShelf`.
+- A SQLite database will be created on first run, in the directory `%LocalAppData%\BlazorTopShelf`.
 - The TopShelf repository is located at [https://github.com/Topshelf/Topshelf](https://github.com/Topshelf/Topshelf).
